@@ -5,6 +5,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
@@ -22,6 +23,7 @@ public class Robot {
     private final Telemetry telemetry;
 
     private final DcMotor lf, lr, rf, rr;
+    public final Servo arm_servo, grip_servo;
     private final BNO055IMU imu;
 
     private double headingOffset = 0.0;
@@ -37,6 +39,9 @@ public class Robot {
         rf = hardwareMap.dcMotor.get("rf");
         lr = hardwareMap.dcMotor.get("lr");
         rr = hardwareMap.dcMotor.get("rr");
+
+        arm_servo = hardwareMap.servo.get("arm_servo");
+        grip_servo = hardwareMap.servo.get("grip_servo");
 
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
         rr.setDirection(DcMotorSimple.Direction.REVERSE);
