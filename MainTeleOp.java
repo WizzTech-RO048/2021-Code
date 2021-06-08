@@ -21,11 +21,11 @@ public class MainTeleOp extends OpMode {
         controller1 = new Controller(gamepad1);
         controller2 = new Controller(gamepad2);
 
-        robot.arm_servo.setPosition(initialArmPosition);
-        robot.grip_servo.setPosition(initialGripPosition);
+        robot.armServo.setPosition(initialArmPosition);
+        robot.gripServo.setPosition(initialGripPosition);
     }
 
-    private void update_robot() {
+    private void updateRobot() {
         if (controller1.XOnce()) robot.resetHeading();
 
         final double x = Math.pow(controller1.left_stick_x, 3.0);
@@ -50,28 +50,47 @@ public class MainTeleOp extends OpMode {
         robot.loop();
 
         if (controller2.XOnce()) {
-            robot.arm_servo.setPosition((robot.arm_servo.getPosition() == initialArmPosition) ?
+            robot.armServo.setPosition((robot.armServo.getPosition() == initialArmPosition) ?
                     armPositions[0] : initialArmPosition);
         }
 
-        if (controller2.YOnce() && (robot.arm_servo.getPosition() == armPositions[0])) {
-            robot.grip_servo.setPosition(gripPosition);
+        if (controller2.YOnce() && (robot.armServo.getPosition() == armPositions[0])) {
+            robot.gripServo.setPosition(gripPosition);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            robot.arm_servo.setPosition(armPositions[1]);
-        }else if(controller2.YOnce() && (robot.arm_servo.getPosition() == armPositions[1])) {
-            robot.arm_servo.setPosition(armPositions[0]);
+            robot.armServo.setPosition(armPositions[1]);
+        }else if(controller2.YOnce() && (robot.armServo.getPosition() == armPositions[1])) {
+            robot.armServo.setPosition(armPositions[0]);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            robot.grip_servo.setPosition(initialArmPosition);
+            robot.gripServo.setPosition(initialArmPosition);
         }
 
-        update_robot();
+        if (controller1.A()) {
+            robot.shooter.setPower(0.85);
+        }else if(!controller1.A()) {
+            robot.shooter.setPower(0.0);
+        }
+
+        if (controller1.B()) {
+            robot.collector.setPower(1.0);
+        }else if(!controller1.B()) {
+            robot.collector.setPower(0.0);
+        }
+
+        if (controller1.XOnce()) {
+            robot.pusher.setPosition(0.87);
+        }
+        if (controller1.YOnce()){
+            robot.pusher.setPosition(1.0);
+        }
+
+        updateRobot();
     }
 }

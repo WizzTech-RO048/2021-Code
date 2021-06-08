@@ -29,11 +29,6 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import org.firstinspires.ftc.robotcore.internal.system.CloseableOnFinalize;
-import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.Controller;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
- * Hardware definitions and access for a robot with a four-motor
+ * Hardware definitions and access for the 2021 robot
  * drive train and a gyro sensor.
  */
 public class Robot {
@@ -23,8 +24,11 @@ public class Robot {
     private final Telemetry telemetry;
 
     private final DcMotor lf, lr, rf, rr;
-    public final Servo arm_servo, grip_servo;
     private final BNO055IMU imu;
+
+    public final DcMotor shooter;
+    public final Servo armServo, gripServo, pusher;
+    public final CRServo collector;
 
     private double headingOffset = 0.0;
     private Orientation angles;
@@ -40,11 +44,14 @@ public class Robot {
         lr = hardwareMap.dcMotor.get("lr");
         rr = hardwareMap.dcMotor.get("rr");
 
-        arm_servo = hardwareMap.servo.get("arm_servo");
-        grip_servo = hardwareMap.servo.get("grip_servo");
-
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
         rr.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        armServo = hardwareMap.servo.get("arm_servo");
+        gripServo = hardwareMap.servo.get("grip_servo");
+        shooter = hardwareMap.dcMotor.get("shooter");
+        collector = hardwareMap.crservo.get("collector");
+        pusher = hardwareMap.servo.get("pusher");
 
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
